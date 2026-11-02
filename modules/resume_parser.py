@@ -97,7 +97,7 @@ def extract_docx_text(file_bytes: bytes) -> tuple[str, int]:
         ) from error
 
 
-def parse_resume(uploaded_file) -> dict:
+def parse_resume(uploaded_file, filename: str | None = None) -> dict:
     """
     Parse an uploaded PDF or DOCX resume.
 
@@ -108,7 +108,7 @@ def parse_resume(uploaded_file) -> dict:
     if uploaded_file is None:
         raise ResumeParsingError("Please upload a resume.")
 
-    filename = getattr(uploaded_file, "name", "")
+    filename = filename or getattr(uploaded_file, "name", "")
 
     if not filename:
         raise ResumeParsingError("Invalid file name.")
