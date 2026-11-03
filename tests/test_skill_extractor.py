@@ -69,6 +69,29 @@ class TestSkillExtractor(unittest.TestCase):
 
         self.assertIn("Keras", result)
         self.assertIn("PySpark", result)
+    
+    def test_duplicate_mentions_return_one_skill(self):
+        result = extract_skills(
+            "Python developer. Built projects using PYTHON and Python 3."
+        )
+
+        self.assertEqual(result.count("Python"), 1)
+
+    def test_skill_aliases_are_normalized(self):
+        result = extract_skills(
+            "Experience with Python3, sklearn, and NLP."
+        )
+
+        self.assertIn("Python", result)
+        self.assertIn("Scikit-learn", result)
+        self.assertIn("Natural Language Processing", result)
+
+    def test_unrelated_words_do_not_create_skill_matches(self):
+        result = extract_skills(
+            "The candidate enjoys teamwork and reading technical books."
+        )
+
+        self.assertEqual(result, [])
 
 
 if __name__ == "__main__":
