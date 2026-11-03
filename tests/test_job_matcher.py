@@ -35,10 +35,7 @@ class TestJobMatcher(unittest.TestCase):
         )
 
         self.assertEqual(result["match_percentage"], 0.0)
-        self.assertEqual(
-            result["matched_skills"],
-            []
-        )
+        self.assertEqual(result["matched_skills"], [])
 
     def test_case_insensitive_matching(self):
         result = match_job(
@@ -60,6 +57,52 @@ class TestJobMatcher(unittest.TestCase):
 
         self.assertEqual(result["total_required_skills"], 0)
         self.assertEqual(result["match_percentage"], 0.0)
+
+    def test_machine_learning_alias_matches(self):
+        result = match_job(
+            ["ML"],
+            "Required skill: Machine Learning"
+        )
+
+        self.assertEqual(
+            result["matched_skills"],
+            ["Machine Learning"]
+        )
+        self.assertEqual(result["match_percentage"], 100.0)
+
+    def test_scikit_learn_alias_matches(self):
+        result = match_job(
+            ["sklearn"],
+            "Required skill: Scikit-learn"
+        )
+
+        self.assertEqual(
+            result["matched_skills"],
+            ["Scikit-learn"]
+        )
+        self.assertEqual(result["match_percentage"], 100.0)
+
+    def test_javascript_does_not_match_java(self):
+        result = match_job(
+            ["JavaScript"],
+            "Required skill: Java"
+        )
+
+        self.assertEqual(result["matched_skills"], [])
+        self.assertEqual(result["missing_skills"], ["Java"])
+        self.assertEqual(result["match_percentage"], 0.0)
+
+    def test_alias_matching_with_partial_match(self):
+        result = match_job(
+            ["ML", "Python"],
+            "Required skills: Machine Learning, Python, Docker"
+        )
+
+        self.assertCountEqual(
+            result["matched_skills"],
+            ["Python", "Machine Learning"]
+        )
+        self.assertEqual(result["match_percentage"], 66.67)
 
 
 if __name__ == "__main__":
