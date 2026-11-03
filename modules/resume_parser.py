@@ -3,7 +3,7 @@ import re
 from io import BytesIO
 from pathlib import Path
 
-import fitz
+import pymupdf
 from docx import Document
 
 
@@ -39,7 +39,7 @@ def extract_pdf_text(file_bytes: bytes) -> tuple[str, int]:
     """Extract text from a PDF resume."""
 
     try:
-        with fitz.open(
+        with pymupdf.open(
             stream=file_bytes,
             filetype="pdf"
         ) as pdf:
