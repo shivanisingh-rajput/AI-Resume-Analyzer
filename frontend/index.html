@@ -1,0 +1,149 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Resume Analyzer</title>
+    <link rel="stylesheet" href="/frontend/style.css">
+    <script src="/frontend/script.js" defer></script>
+</head>
+<body>
+    <header class="topbar">
+        <a class="brand" href="/">
+            <span class="brand-icon">AI</span>
+            <span>Resume Analyzer</span>
+        </a>
+        <span class="status"><span class="status-dot"></span> AI-powered analysis</span>
+    </header>
+
+    <main class="container">
+        <section class="hero">
+            <span class="eyebrow">CAREER INTELLIGENCE</span>
+            <h1>Make your resume work <span>smarter.</span></h1>
+            <p>Discover how well your resume matches a job, identify skill gaps, and get actionable recommendations.</p>
+        </section>
+
+        <section class="workspace">
+            <form id="analyze-form" class="panel">
+                <div class="section-heading">
+                    <span class="step">01</span>
+                    <div>
+                        <h2>Your resume</h2>
+                        <p>Upload your current resume to get started.</p>
+                    </div>
+                </div>
+
+                <label for="resume-file" class="upload-area" id="upload-area">
+                    <span class="upload-icon">↑</span>
+                    <strong id="file-label">Choose your resume</strong>
+                    <span id="file-hint">Drag and drop, or click to browse</span>
+                    <span class="file-types">PDF or DOCX · Maximum 10 MB</span>
+                </label>
+                <input id="resume-file" name="file" type="file"
+                       accept=".pdf,.docx,application/pdf,application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+                       required>
+
+                <div class="section-heading job-heading">
+                    <span class="step">02</span>
+                    <div>
+                        <h2>Target job description</h2>
+                        <p>Paste the job requirements you want to match.</p>
+                    </div>
+                </div>
+
+                <label for="job-description" class="sr-only">Job description</label>
+                <textarea id="job-description" name="job_description"
+                          placeholder="Paste the job description here...&#10;&#10;Example: Looking for a candidate with Python, SQL, Machine Learning, Pandas, and communication skills."
+                          required></textarea>
+
+                <button type="submit" id="analyze-button">
+                    <span id="button-text">Analyze my resume</span>
+                    <span aria-hidden="true"> →</span>
+                </button>
+
+                <p class="privacy-note">Your resume is processed by your local application server.</p>
+                <p id="error-message" class="error-message" role="alert" hidden></p>
+            </form>
+
+            <aside class="info-panel">
+                <div class="info-symbol">✦</div>
+                <h2>Understand your fit.</h2>
+                <p>Get a clearer picture of how your current skills align with your target role.</p>
+
+                <div class="feature">
+                    <span>✓</span>
+                    <div><strong>Skill matching</strong><p>See skills detected in your resume and those required by the job.</p></div>
+                </div>
+                <div class="feature">
+                    <span>↗</span>
+                    <div><strong>Gap identification</strong><p>Find important skills that may need more attention.</p></div>
+                </div>
+                <div class="feature">
+                    <span>◎</span>
+                    <div><strong>Actionable guidance</strong><p>Get recommendations to guide your next learning steps.</p></div>
+                </div>
+                <p class="disclaimer">Results are estimates based on the application's skill extraction and matching logic, not a hiring decision.</p>
+            </aside>
+        </section>
+
+        <section id="results" class="results" hidden>
+            <div class="results-heading">
+                <div>
+                    <span class="eyebrow">YOUR ANALYSIS</span>
+                    <h2>Resume analysis results</h2>
+                    <p id="result-filename"></p>
+                </div>
+                <button id="new-analysis" class="secondary-button" type="button">New analysis</button>
+            </div>
+
+            <div class="summary-grid">
+                <article class="metric-card">
+                    <span>Job match</span>
+                    <strong id="match-percentage">—</strong>
+                    <div class="progress-track"><div id="match-progress" class="progress-fill"></div></div>
+                    <small>Based on detected required skills</small>
+                </article>
+                <article class="metric-card">
+                    <span>Skills detected</span>
+                    <strong id="skill-count">—</strong>
+                    <small>Identified in your resume</small>
+                </article>
+                <article class="metric-card">
+                    <span>Skills matched</span>
+                    <strong id="matched-count">—</strong>
+                    <small>Present in both resume and job description</small>
+                </article>
+                <article class="metric-card">
+                    <span>Skills to develop</span>
+                    <strong id="missing-count">—</strong>
+                    <small>Required by the job but not detected</small>
+                </article>
+            </div>
+
+            <div class="result-grid">
+                <article class="result-card">
+                    <h3>Skills found in your resume</h3>
+                    <div id="resume-skills" class="skill-list"></div>
+                </article>
+                <article class="result-card">
+                    <h3>Matched skills</h3>
+                    <div id="matched-skills" class="skill-list"></div>
+                </article>
+                <article class="result-card">
+                    <h3>Missing skills</h3>
+                    <div id="missing-skills" class="skill-list"></div>
+                </article>
+            </div>
+
+            <article class="result-card recommendations-card">
+                <h3>Recommended next steps</h3>
+                <div id="recommendations"></div>
+            </article>
+            <p class="disclaimer results-disclaimer">A skill marked as missing may still be part of your experience if it was not explicitly detected in the resume text.</p>
+        </section>
+
+        <footer>AI Resume Analyzer · Built with FastAPI and Python</footer>
+    </main>
+</body>
+</html>

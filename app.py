@@ -6,6 +6,8 @@ from modules.resume_analyzer import analyze_resume
 from modules.job_matcher import match_job
 from modules.recommendations import generate_recommendations
 from modules.resume_parser import ResumeParsingError
+from fastapi.responses import FileResponse
+from fastapi.staticfiles import StaticFiles
 
 
 app = FastAPI(
@@ -16,13 +18,15 @@ app = FastAPI(
     ),
     version="1.0.0",
 )
-
+app.mount(
+    "/frontend",
+    StaticFiles(directory="frontend"),
+    name="frontend",
+)
 
 @app.get("/", include_in_schema=False)
 def home():
-    """Redirect users to the interactive API documentation."""
-    return RedirectResponse(url="/docs")
-
+    return FileResponse("frontend/index.html")
 
 @app.get("/health", tags=["Health"])
 def health_check():
