@@ -88,6 +88,72 @@ SKILL_GUIDANCE = {
         "category": "Professional Skills",
         "action": "Solve problems systematically and explain your reasoning and trade-offs."
     },
+    
+    "C++": {
+        "category": "Programming",
+        "action": "Practice pointers, object-oriented programming, STL containers, and algorithms."
+    },
+    "C#": {
+        "category": "Programming",
+        "action": "Practice C# syntax, object-oriented programming, LINQ, and exception handling."
+    },
+    "JavaScript": {
+        "category": "Web Development",
+        "action": "Practice ES6+, asynchronous programming, DOM manipulation, and API integration."
+    },
+    "HTML": {
+        "category": "Web Development",
+        "action": "Build accessible web pages using semantic HTML and forms."
+    },
+    "CSS": {
+        "category": "Web Development",
+        "action": "Practice responsive layouts, Flexbox, Grid, and media queries."
+    },
+    "Generative AI": {
+        "category": "Artificial Intelligence",
+        "action": "Build a small generative AI application and practice prompt design, model evaluation, and responsible output handling."
+    },
+    "Large Language Models": {
+        "category": "Generative AI",
+        "action": "Learn tokenization, embeddings, transformer basics, and LLM evaluation by building a small application."
+    },
+    "LangChain": {
+        "category": "LLM Development",
+        "action": "Build an application using prompt templates, model integrations, retrieval, and output parsing."
+    },
+    "REST API": {
+        "category": "Backend Development",
+        "action": "Build and test REST endpoints with HTTP methods, status codes, validation, and error handling."
+    },
+    "GitHub": {
+        "category": "Version Control",
+        "action": "Practice pull requests, branching, code reviews, and resolving merge conflicts."
+    },
+    "Excel": {
+        "category": "Data Analysis",
+        "action": "Practice formulas, lookup functions, pivot tables, data cleaning, and charts."
+    },
+    "Power BI": {
+        "category": "Business Intelligence",
+        "action": "Build an interactive dashboard using Power Query, data modeling, and DAX measures."
+    },
+    "Tableau": {
+        "category": "Data Visualization",
+        "action": "Create an interactive dashboard with calculated fields, filters, and meaningful visualizations."
+    },
+    "PySpark": {
+        "category": "Big Data",
+        "action": "Practice DataFrame transformations, joins, aggregations, and distributed data processing."
+    },
+    "Keras": {
+        "category": "Deep Learning",
+        "action": "Build, train, and evaluate neural networks using Keras."
+    },
+    "Large Language Models": {
+        "category": "Generative AI",
+        "action": "Practice transformer fundamentals, embeddings, inference, and evaluation of language models."
+    },
+
 }
 
 
