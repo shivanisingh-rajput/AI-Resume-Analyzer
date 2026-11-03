@@ -2,7 +2,7 @@
 import unittest
 from io import BytesIO
 
-import fitz
+import pymupdf
 from docx import Document
 
 from modules.resume_parser import (
@@ -26,7 +26,7 @@ class TestResumeParser(unittest.TestCase):
         return buffer
 
     def create_pdf(self):
-        document = fitz.open()
+        document = pymupdf.open()
         page = document.new_page()
 
         page.insert_text(
