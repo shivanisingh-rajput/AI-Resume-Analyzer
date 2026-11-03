@@ -2,7 +2,7 @@
 import re
 
 
-# Skills that the extractor can recognize
+# Canonical skill names returned by the extractor.
 SKILL_KEYWORDS = [
     "Python",
     "Java",
@@ -19,6 +19,8 @@ SKILL_KEYWORDS = [
     "Scikit-learn",
     "TensorFlow",
     "PyTorch",
+    "Keras",
+    "PySpark",
     "Machine Learning",
     "Deep Learning",
     "Data Analysis",
@@ -44,23 +46,47 @@ SKILL_KEYWORDS = [
 ]
 
 
-def extract_skills(resume_text: str) -> list[str]:
-    """Extract known skills from resume text."""
+# Alternative spellings and abbreviations mapped to canonical names.
+SKILL_ALIASES = {
+    "Python": ["python 3", "python3"],
+    "JavaScript": ["js"],
+    "Scikit-learn": [
+        "scikit learn",
+        "sklearn",
+        "scikit learn library",
+    ],
+    "Machine Learning": ["ml"],
+    "Natural Language Processing": ["nlp"],
+    "Computer Vision": ["cv"],
+    "Generative AI": ["gen ai", "genai"],
+    "Large Language Models": ["llm", "llms"],
+    "REST API": ["rest apis", "restful api", "restful apis"],
+    "PyTorch": ["pytorch framework"],
+}
 
+
+def _matches_term(text: str, term: str) -> bool:
+    """Match a complete skill name or abbreviation."""
+    pattern = rf"(?<!\w){re.escape(term.casefold())}(?!\w)"
+    return re.search(pattern, text.casefold()) is not None
+
+
+def extract_skills(resume_text: str) -> list[str]:
+    """
+    Extract recognized skills and return canonical names.
+
+    Matching is case-insensitive and supports configured aliases.
+    Results contain each canonical skill at most once.
+    """
     if not resume_text or not resume_text.strip():
         return []
 
     found_skills = []
-    normalized_text = resume_text.lower()
 
     for skill in SKILL_KEYWORDS:
-        # Escape special characters such as +, # and .
-        escaped_skill = re.escape(skill.lower())
+        terms = [skill, *SKILL_ALIASES.get(skill, [])]
 
-        # Match whole words or phrases, not partial words.
-        pattern = rf"(?<!\w){escaped_skill}(?!\w)"
-
-        if re.search(pattern, normalized_text):
+        if any(_matches_term(resume_text, term) for term in terms):
             found_skills.append(skill)
 
     return found_skills

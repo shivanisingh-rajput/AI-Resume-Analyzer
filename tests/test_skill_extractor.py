@@ -1,14 +1,13 @@
 
 import unittest
-
 from modules.skill_extractor import extract_skills
 
 
 class TestSkillExtractor(unittest.TestCase):
 
+    # Original tests
     def test_extract_multiple_skills(self):
         text = "I know Python, SQL, Pandas and Machine Learning."
-
         result = extract_skills(text)
 
         self.assertIn("Python", result)
@@ -33,8 +32,43 @@ class TestSkillExtractor(unittest.TestCase):
 
     def test_avoid_partial_word_match(self):
         result = extract_skills("The word pythonic is present.")
-
         self.assertNotIn("Python", result)
+
+    # New alias and accuracy tests
+    def test_recognize_skill_aliases(self):
+        result = extract_skills(
+            "Experience with ML, NLP, sklearn, JS and LLMs."
+        )
+
+        self.assertIn("Machine Learning", result)
+        self.assertIn("Natural Language Processing", result)
+        self.assertIn("Scikit-learn", result)
+        self.assertIn("JavaScript", result)
+        self.assertIn("Large Language Models", result)
+
+    def test_normalize_skill_spelling(self):
+        result = extract_skills(
+            "Used scikit learn and SCikit-learn for modeling."
+        )
+
+        self.assertEqual(result.count("Scikit-learn"), 1)
+
+    def test_java_does_not_match_javascript(self):
+        result = extract_skills("My frontend skill is JavaScript.")
+
+        self.assertIn("JavaScript", result)
+        self.assertNotIn("Java", result)
+
+    def test_ml_does_not_match_inside_a_longer_word(self):
+        result = extract_skills("The project uses an XML document.")
+
+        self.assertNotIn("Machine Learning", result)
+
+    def test_extract_new_skills(self):
+        result = extract_skills("Used Keras and PySpark.")
+
+        self.assertIn("Keras", result)
+        self.assertIn("PySpark", result)
 
 
 if __name__ == "__main__":
