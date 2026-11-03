@@ -48,6 +48,42 @@ class TestRecommendations(unittest.TestCase):
 
     def test_missing_key(self):
         self.assertEqual(generate_recommendations({}), [])
+    
+    def test_javascript_gets_specific_guidance(self):
+        recommendations = generate_recommendations({
+            "missing_skills": ["JavaScript"]
+        })
+
+        self.assertEqual(len(recommendations), 1)
+        self.assertEqual(recommendations[0]["skill"], "JavaScript")
+        self.assertNotIn(
+            "generic",
+            recommendations[0]["suggested_action"].lower()
+        )
+
+    def test_generative_ai_gets_specific_guidance(self):
+        recommendations = generate_recommendations({
+            "missing_skills": ["Generative AI"]
+        })
+
+        self.assertEqual(len(recommendations), 1)
+        self.assertEqual(recommendations[0]["skill"], "Generative AI")
+        self.assertNotIn(
+            "generic",
+            recommendations[0]["suggested_action"].lower()
+        )
+
+    def test_power_bi_gets_specific_guidance(self):
+        recommendations = generate_recommendations({
+            "missing_skills": ["Power BI"]
+        })
+
+        self.assertEqual(len(recommendations), 1)
+        self.assertEqual(recommendations[0]["skill"], "Power BI")
+        self.assertNotIn(
+            "generic",
+            recommendations[0]["suggested_action"].lower()
+        )
 
 
 if __name__ == "__main__":
